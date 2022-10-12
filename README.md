@@ -12,7 +12,7 @@ _Developed by
 If you have ever heard of [JavaScript Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise),
 you're already halfway there. Futures offer a similar method of organising
 asynchronous code using "callbacks":
-```
+```js
 var future = new Future();
 
 future.andThen(function(result) {
@@ -23,7 +23,7 @@ future.accept(10);
 ```
 
 Just like JavaScript Promises, it is possible to chain multiple futures:
-```
+```js
 future_file_text_read("test-file.txt")
   .andThen(function(content) {
     return future_json_parse(content);
