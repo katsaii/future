@@ -106,6 +106,13 @@ function Future() constructor {
         } else {
             // evaluate immediately
             newFuture = callback(result);
+            if (!is_struct(newFuture) || instanceof(newFuture) != "Future") {
+                if (newFuture != undefined) {
+                    var val = newFuture;
+                    newFuture = new Future();
+                    newFuture.accept(val);
+                }
+            }
         }
         if (newFuture == undefined) {
             newFuture = new Future();
@@ -142,14 +149,14 @@ function Future() constructor {
                 var callback = callbacks[i];
                 var future = callbacks[i + 1];
                 var result = callback(value);
-                if (result == undefined) {
-                    future.accept();
-                } else {
+                if (is_struct(result) && instanceof(result) == "Future") {
                     result.andThen(method({
                         future : future,
                     }, function(value) {
                         future.accept(value);
                     }));
+                } else {
+                    future.accept(result);
                 }
             }
         }

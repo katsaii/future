@@ -1,5 +1,8 @@
 {
   "resources": [
+    {"id":{"name":"scr_future_async","path":"scripts/scr_future_async/scr_future_async.yy",},"order":2,},
+    {"id":{"name":"obj_future_async_load","path":"objects/obj_future_async_load/obj_future_async_load.yy",},"order":0,},
+    {"id":{"name":"obj_future_async_save","path":"objects/obj_future_async_save/obj_future_async_save.yy",},"order":1,},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},"order":0,},
     {"id":{"name":"scr_future","path":"scripts/scr_future/scr_future.yy",},"order":0,},
   ],
@@ -23,6 +26,7 @@
   "Folders": [
     {"folderPath":"folders/Future.yy","order":1,"resourceVersion":"1.0","name":"Future","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Future/testing.yy","order":1,"resourceVersion":"1.0","name":"testing","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Future/async.yy","order":3,"resourceVersion":"1.0","name":"async","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},
