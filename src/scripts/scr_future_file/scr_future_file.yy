@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "async",
-    "path": "folders/Future/async.yy",
+    "name": "file",
+    "path": "folders/Future/file.yy",
   },
   "resourceVersion": "1.0",
-  "name": "scr_future_async",
+  "name": "scr_future_file",
   "tags": [],
   "resourceType": "GMScript",
 }

@@ -4,14 +4,16 @@
 
 //# feather use syntax-errors
 
-/// Creates a new [Future] which is resolved only when all other
-/// futures in an array are resolved.
+/// Creates a new [Future] which is accepted only when all other futures in an
+/// array are accepted. If any future in the array is rejected, then the
+/// resulting future is rejected with its value. If all futures are accepted,
+/// then the resulting future is accepted with an array of their values.
 ///
 /// @param {Array<Struct.Future>} futures
 ///   The array of futures to await.
 ///
 /// @return {Struct.Future}
-function future_join(futures) {
+function future_all(futures) {
     var count = array_length(futures);
     var newFuture = new Future();
     if (count == 0) {
@@ -48,6 +50,87 @@ function future_join(futures) {
         }
     }
     return newFuture;
+}
+
+/// Creates a new [Future] which is accepted if any of the futures in an
+/// array are accepted. If all futures in the array are rejected, then the
+/// resulting future is rejected with an array of their values.
+///
+/// @param {Array<Struct.Future>} futures
+///   The array of futures to await.
+///
+/// @return {Struct.Future}
+function future_any(futures) {
+    var count = array_length(futures);
+    var newFuture = new Future();
+    if (count == 0) {
+        newFuture.reject([]);
+    } else {
+        var joinData = {
+            future : newFuture,
+            count : count,
+            results : array_create(count, undefined),
+        };
+        for (var i = 0; i < count; i += 1) {
+            var future = futures[i];
+            future.andThen(method(joinData, function(result) {
+                if (future.resolved()) {
+                    return;
+                }
+                future.accept(result);
+            }));
+            future.andCatch(method({
+                pos : i,
+                joinData : joinData,
+            }, function(result) {
+                var future = joinData.future;
+                if (future.resolved()) {
+                    return;
+                }
+                var results = joinData.results;
+                results[@ pos] = result;
+                joinData.count -= 1;
+                if (joinData.count <= 0) {
+                    future.reject(results);
+                }
+            }));
+        }
+    }
+    return newFuture;
+}
+
+/// Creates a new [Future] which is immediately accepted with a value.
+/// If the value itself it an instance of [Future], then it is returned
+/// instead.
+///
+/// @param {Any} value
+///   The value to create a future from.
+///
+/// @return {Struct.Future}
+function future_ok(value) {
+    if (is_struct(value) && instanceof(value) == "Future") {
+        return value;
+    }
+    var future = new Future();
+    future.accept(value);
+    return future;
+}
+
+/// Creates a new [Future] which is immediately rejected with a value.
+/// If the value itself it an instance of [Future], then it is returned
+/// instead.
+///
+/// @param {Any} value
+///   The value to create a future from.
+///
+/// @return {Struct.Future}
+function future_error(value) {
+    if (is_struct(value) && instanceof(value) == "Future") {
+        return value;
+    }
+    var future = new Future();
+    future.reject(value);
+    return future;
 }
 
 /// The different progress states of a [Future].
