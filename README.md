@@ -1,3 +1,24 @@
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    align="right"
+    width="30%"
+    height="30%"
+    srcset="./future-logo-dark.svg">
+  <source
+    media="(prefers-color-scheme: light)"
+    align="right"
+    width="30%"
+    height="30%"
+    srcset="./future-logo.svg">
+  <img
+    align="right"
+    width="30%"
+    height="30%"
+    alt="Future Logo"
+    src="./future-logo.svg">
+</picture>
+
 # Future
 
 A cross-platform micro-library for managing asynchronous code. Originally
@@ -5,7 +26,8 @@ designed for the [Catspeak programming language](https://github.com/NuxiiGit/cat
 and later made into its own library.
 
 _Developed by
-[katsaii](https://www.katsaii.com/)._
+[katsaii](https://www.katsaii.com/), logo design by
+[mashmerlow](https://mashmerlow.github.io/)._
 
 ## Overview
 
