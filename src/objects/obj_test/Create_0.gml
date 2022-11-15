@@ -6,3 +6,5 @@ future_ok(1).andThen(function() {
 }).andThen(function(a) {
     show_message(a);
 });
+
+event_user(-8);
